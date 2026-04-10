@@ -1,1 +1,0 @@
-# jandarma-beden-tablosu-
