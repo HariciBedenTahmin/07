@@ -1,328 +1,425 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hizmet Giyeceği Beden Tahmin Sistemi</title>
+<style>
+:root{
+  --bg:#081425;
+  --bg2:#0d2340;
+  --card:rgba(255,255,255,.06);
+  --card2:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.12);
+  --text:#f8fafc;
+  --muted:#cbd5e1;
+  --gold:#d4af37;
+  --green:#1f6b45;
+  --green2:#2d8e5e;
+  --shadow:0 18px 50px rgba(0,0,0,.30);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top right, rgba(212,175,55,.10), transparent 22%),
+    linear-gradient(135deg, var(--bg), var(--bg2));
+}
+.wrapper{max-width:1100px;margin:0 auto;padding:18px}
+.hero,.panel{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+}
+.hero{padding:24px;margin-bottom:18px}
+.badge{
+  display:inline-block;padding:8px 12px;border-radius:999px;font-size:12px;
+  color:#fff3c4;background:rgba(212,175,55,.10);border:1px solid rgba(212,175,55,.28);margin-bottom:12px;
+}
+h1{margin:0 0 10px;font-size:clamp(28px, 4vw, 42px);color:var(--gold)}
+.hero p{margin:0;color:var(--muted);line-height:1.7;max-width:800px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat small{display:block;color:var(--muted);margin-bottom:6px}
+.stat strong{color:var(--gold);font-size:16px}
+.main{display:grid;grid-template-columns:380px 1fr;gap:18px}
+.form-panel,.results-panel{padding:20px}
+.form-panel h2,.results-panel h2{margin:0 0 16px;color:var(--gold)}
+.grid{display:grid;gap:12px}
+.grid.two{grid-template-columns:1fr 1fr}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+input,select{
+  width:100%;padding:14px;border:none;outline:none;border-radius:14px;
+  background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--line);font-size:15px
+}
+select option{color:#111827;background:#fff}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+button{border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:bold;cursor:pointer}
+.primary{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff}
+.secondary{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}
+.hint{margin-top:14px;color:var(--muted);font-size:12px;line-height:1.65}
+.info-box{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
+.info-title{color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.info-box p{margin:0;color:var(--muted);line-height:1.7}
+.placeholder{
+  padding:26px;border-radius:16px;border:1px dashed rgba(255,255,255,.18);
+  color:var(--muted);text-align:center;line-height:1.7
+}
+.cards{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.cards.show{display:grid}
+.card{background:var(--card2);border:1px solid var(--line);border-radius:18px;padding:18px;min-height:138px}
+.card-title{color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.value{font-size:30px;font-weight:bold;margin-bottom:10px}
+.desc{color:var(--muted);font-size:13px;line-height:1.6}
+.note{
+  margin-top:16px;padding:15px;border-radius:16px;background:rgba(212,175,55,.08);
+  border:1px solid rgba(212,175,55,.16);color:#fde68a;font-size:13px;line-height:1.65
+}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:16px}
+@media (max-width: 900px){.main{grid-template-columns:1fr}}
+@media (max-width: 640px){.stats,.cards,.buttons,.grid.two{grid-template-columns:1fr 1fr}}
+@media (max-width: 420px){.stats,.cards,.buttons,.grid.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <section class="hero">
+    <span class="badge">Beden Tahmin Ekranı</span>
+    <h1>Hizmet Giyeceği Beden Tahmin Sistemi</h1>
+    <p>Boy, kilo, cinsiyet ve göbek/basen durumuna göre mont, yelek, pardösü, pantolon, elbise ve gömlek için ön beden önerisi verir.</p>
+    <div class="stats">
+      <div class="stat"><small>Üst Giyim</small><strong>Mont • Yelek • Pardösü</strong></div>
+      <div class="stat"><small>Alt Giyim</small><strong>Pantolon • Elbise</strong></div>
+      <div class="stat"><small>Ek Kural</small><strong>Göbek/Basen = 1 üst beden</strong></div>
+    </div>
+  </section>
+
+  <section class="main">
+    <aside class="panel form-panel">
+      <h2>Bilgi Girişi</h2>
+      <div class="grid">
+        <div class="grid two">
+          <div>
+            <label for="cinsiyet">Cinsiyet</label>
+            <select id="cinsiyet">
+              <option value="erkek">Erkek</option>
+              <option value="kadin">Kadın</option>
+            </select>
+          </div>
+          <div>
+            <label for="vucut">Göbek veya basen var mı?</label>
+            <select id="vucut">
+              <option value="hayir">Hayır</option>
+              <option value="evet">Evet</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid two">
+          <div>
+            <label for="boy">Boy (cm)</label>
+            <input id="boy" type="number" placeholder="177" />
+          </div>
+          <div>
+            <label for="kilo">Kilo (kg)</label>
+            <input id="kilo" type="number" placeholder="84" />
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="primary" onclick="hesapla()">Bedenleri Göster</button>
+        <button class="secondary" onclick="temizle()">Temizle</button>
+      </div>
+
+      <div class="hint">
+        Alt giyimde pantolon ve elbise aynı beden mantığıyla çalışır. Boy sistemi:
+        170 altı kısa, 170-180 normal, 180-187 uzun, 187 üstü A.
+      </div>
+    </aside>
+
+    <section class="panel results-panel">
+      <h2>Önerilen Bedenler</h2>
+
+      <div class="info-box">
+        <div class="info-title">Ölçü Özeti</div>
+        <p id="kisiBilgisi">Önce bilgileri girip bedenleri göster butonuna basın.</p>
+      </div>
+
+      <div id="placeholder" class="placeholder">
+        Sonuç kartları, bilgiler girildikten sonra burada açılır.
+      </div>
+
+      <div id="cards" class="cards">
+        <div class="card"><div class="card-title">Mont</div><div id="mont" class="value">-</div><div class="desc">Üst giyimde harfli yapı kullanılır.</div></div>
+        <div class="card"><div class="card-title">Yelek</div><div id="yelek" class="value">-</div><div class="desc">Montla yakın sistemde önerilir.</div></div>
+        <div class="card"><div class="card-title">Pardösü</div><div id="pardosu" class="value">-</div><div class="desc">Montla yakın sistemde önerilir.</div></div>
+        <div class="card"><div class="card-title">Pantolon</div><div id="pantolon" class="value">-</div><div class="desc">Elbise ile aynı beden mantığı kullanılır.</div></div>
+        <div class="card"><div class="card-title">Elbise</div><div id="elbise" class="value">-</div><div class="desc">Pantolonla aynı beden mantığı kullanılır.</div></div>
+        <div class="card"><div class="card-title">Gömlek</div><div id="gomlek" class="value">-</div><div class="desc">Boy + kilo oranına göre önerilir.</div></div>
+      </div>
+
+      <div class="note" id="uyari">
+        Bu ekran ön öneri verir. Kesin beden teslim sırasında netleşir.
+      </div>
+
+      <div class="footer">Hizmet Giyeceği Beden Tahmin Sistemi</div>
+    </section>
+  </section>
+</div>
+
 <script>
-const ornekler = [
-  {cinsiyet:"erkek", boy:190, kilo:80, gobekli:"hayir", pantolon:"53-9", elbise:"54-8"},
-  {cinsiyet:"erkek", boy:177, kilo:84, gobekli:"hayir", pantolon:"53-7", elbise:"53-5 / 53-7", gomlek:"L-B", mont:"54-C"},
-  {cinsiyet:"erkek", boy:182, kilo:88, gobekli:"hayir", pantolon:"54-6", elbise:"54-6", gomlek:"L-B"},
-  {cinsiyet:"erkek", boy:175, kilo:75, gobekli:"hayir", gomlek:"M-B"},
-  {cinsiyet:"erkek", boy:168, kilo:67, gobekli:"hayir", gomlek:"M-A"},
-  {cinsiyet:"erkek", boy:190, kilo:82, gobekli:"hayir", gomlek:"L-C"},
-  {cinsiyet:"erkek", boy:190, kilo:90, gobekli:"hayir", gomlek:"XL-C"},
-  {cinsiyet:"erkek", boy:190, kilo:95, gobekli:"hayir", gomlek:"XXL-C"},
-
-  {cinsiyet:"erkek", boy:172, kilo:93, gobekli:"evet", mont:"54-B", yelek:"54-B", pardosu:"54-B", gomlek:"M-B", pantolon:"54-6 / 55-7", elbise:"54-6A"},
-  {cinsiyet:"erkek", boy:180, kilo:93, gobekli:"hayir", mont:"56-D", yelek:"56-D", pardosu:"56-D"},
-
-  {cinsiyet:"kadin", boy:172, kilo:58, gobekli:"hayir", mont:"42-B", pardosu:"42-B", pantolon:"42-2"}
+const refs = [
+  { cinsiyet:"erkek", boy:177, kilo:84, vucut:"hayir", mont:"54-C", yelek:"54-C", pardosu:"54-C", gomlek:"L-B", pantolon:"53-7", elbise:"53-7" },
+  { cinsiyet:"erkek", boy:172, kilo:93, vucut:"evet", mont:"54-B", yelek:"54-B", pardosu:"54-B", gomlek:"M-B", pantolon:"54-6 / 55-7", elbise:"54-6A" },
+  { cinsiyet:"erkek", boy:180, kilo:93, vucut:"hayir", mont:"56-D", yelek:"56-D", pardosu:"56-D" },
+  { cinsiyet:"erkek", boy:190, kilo:80, vucut:"hayir", pantolon:"53-9", elbise:"53-9" },
+  { cinsiyet:"erkek", boy:182, kilo:88, vucut:"hayir", pantolon:"54-6", elbise:"54-6", gomlek:"L-B" },
+  { cinsiyet:"erkek", boy:175, kilo:75, vucut:"hayir", gomlek:"M-B" },
+  { cinsiyet:"erkek", boy:168, kilo:67, vucut:"hayir", gomlek:"M-A" },
+  { cinsiyet:"erkek", boy:190, kilo:82, vucut:"hayir", gomlek:"L-C" },
+  { cinsiyet:"erkek", boy:190, kilo:90, vucut:"hayir", gomlek:"XL-C" },
+  { cinsiyet:"erkek", boy:190, kilo:95, vucut:"hayir", gomlek:"XXL-C" },
+  { cinsiyet:"kadin", boy:172, kilo:58, vucut:"hayir", mont:"42-B", yelek:"42-B", pardosu:"42-B", pantolon:"42-2", elbise:"42-2", gomlek:"M-B" }
 ];
 
-function upEven(n){
-  return n % 2 === 0 ? n + 2 : n + 1;
-}
+function nextEven(n){ return n % 2 === 0 ? n + 2 : n + 1; }
+function nextOdd(n){ return n % 2 === 1 ? n + 2 : n + 1; }
 
-function upOdd(n){
-  return n % 2 === 1 ? n + 2 : n + 1;
-}
-
-function shirtUp(size){
-  const sizes = ["S","M","L","XL","XXL","3XL"];
-  const i = sizes.indexOf(size);
-  if (i === -1 || i === sizes.length - 1) return size;
-  return sizes[i + 1];
-}
-
-function erkekUstHarf(boy){
-  if (boy >= 185) return "E";
-  if (boy >= 180) return "D";
-  if (boy >= 175) return "C";
-  return "B";
-}
-
-function kadinUstHarf(boy){
-  if (boy >= 175) return "C";
-  if (boy >= 165) return "B";
-  return "A";
-}
-
-function erkekUstGiyim(boy, kilo, gobekli, alan="mont"){
-  const eslesme = ornekler.find(o =>
-    o.cinsiyet === "erkek" &&
-    o.boy === boy &&
-    o.kilo === kilo &&
-    o.gobekli === gobekli &&
-    o[alan]
+function findRef(cinsiyet,boy,kilo,vucut,alan){
+  const hit = refs.find(r =>
+    r.cinsiyet === cinsiyet &&
+    r.boy === boy &&
+    r.kilo === kilo &&
+    r.vucut === vucut &&
+    r[alan]
   );
-  if (eslesme) return eslesme[alan];
-
-  let beden;
-  if (kilo < 65) beden = 48;
-  else if (kilo < 72) beden = 50;
-  else if (kilo < 80) beden = 52;
-  else if (kilo < 87) beden = 54;
-  else if (kilo < 96) beden = 56;
-  else if (kilo < 103) beden = 58;
-  else beden = 60;
-
-  // boy etkisi daha yumuşak
-  if (boy >= 188 && kilo <= 85) beden += 2;
-  else if (boy >= 180 && kilo <= 85) beden += 0;
-
-  // göbek/basen var ise üst giyimde artık kör +1 kademe yok.
-  // sadece sınırdaki durumlarda bir üst çift beden
-  if (gobekli === "evet" && kilo < 88) beden = upEven(beden);
-
-  beden = Math.max(46, Math.min(62, beden));
-  if (beden % 2 !== 0) beden += 1;
-
-  return `${beden}-${erkekUstHarf(boy)}`;
+  return hit ? hit[alan] : null;
 }
 
-function kadinMont(boy, kilo, gobekli){
-  const eslesme = ornekler.find(o =>
-    o.cinsiyet==="kadin" && o.boy===boy && o.kilo===kilo && o.gobekli===gobekli && o.mont
-  );
-  if (eslesme) return eslesme.mont;
-
-  let beden;
-  if (kilo < 50) beden = 38;
-  else if (kilo < 56) beden = 40;
-  else if (kilo < 63) beden = 42;
-  else if (kilo < 70) beden = 44;
-  else if (kilo < 78) beden = 46;
-  else if (kilo < 86) beden = 48;
-  else beden = 50;
-
-  if (gobekli === "evet") beden += 2;
-  beden = Math.min(54, beden);
-  return `${beden}-${kadinUstHarf(boy)}`;
+function maleUpperLetter(boy){
+  if (boy < 170) return "A";
+  if (boy < 177) return "B";
+  if (boy < 180) return "C";
+  if (boy < 187) return "D";
+  return "E";
 }
 
-function kadinYelek(boy, kilo, gobekli){
-  let beden;
-  if (kilo < 50) beden = 38;
-  else if (kilo < 56) beden = 40;
-  else if (kilo < 63) beden = 42;
-  else if (kilo < 70) beden = 44;
-  else if (kilo < 78) beden = 46;
-  else if (kilo < 86) beden = 48;
-  else beden = 50;
-
-  if (gobekli === "evet") beden += 2;
-  beden = Math.min(52, beden);
-  return `${beden}-${kadinUstHarf(boy)}`;
+function femaleUpperLetter(boy){
+  if (boy < 165) return "A";
+  if (boy < 175) return "B";
+  if (boy < 182) return "C";
+  if (boy < 187) return "D";
+  return "E";
 }
 
-function kadinPardosu(boy, kilo, gobekli){
-  const eslesme = ornekler.find(o =>
-    o.cinsiyet==="kadin" && o.boy===boy && o.kilo===kilo && o.gobekli===gobekli && o.pardosu
-  );
-  if (eslesme) return eslesme.pardosu;
-  return kadinMont(boy, kilo, gobekli);
+function maleLowerDrop(base, boy, vucut){
+  if (boy < 170) return base % 2 === 0 ? "4" : "5";
+  if (boy < 180) return base % 2 === 0 ? "6" : "7";
+  if (boy < 187) return base % 2 === 0 ? "8" : "9";
+  return base % 2 === 0 ? "A" : "11/A";
 }
 
-function erkekPantolon(boy, kilo, gobekli){
-  const eslesme = ornekler.find(o =>
-    o.cinsiyet==="erkek" && o.boy===boy && o.kilo===kilo && o.gobekli===gobekli && o.pantolon
-  );
-  if (eslesme) return eslesme.pantolon;
-
-  let ana;
-  if (kilo < 65) ana = 47;
-  else if (kilo < 72) ana = 49;
-  else if (kilo < 79) ana = 51;
-  else if (kilo < 86) ana = 53;
-  else if (kilo < 94) ana = 54;
-  else if (kilo < 100) ana = 56;
-  else ana = 58;
-
-  let alt;
-  if (ana % 2 === 0){
-    if (boy < 168) alt = 4;
-    else if (boy < 177) alt = 6;
-    else if (boy < 186) alt = 8;
-    else alt = 10;
-  } else {
-    if (boy < 168) alt = 5;
-    else if (boy < 180) alt = 7;
-    else alt = 9;
-  }
-
-  // göbek/basen var ise alt giyimde tek sefer yükseltme
-  if (gobekli === "evet"){
-    if (ana % 2 === 0) return `${upOdd(ana)}-${alt}A`;
-    return `${ana}-${alt}A`;
-  }
-
-  return `${ana}-${alt}`;
+function femaleLowerDrop(boy){
+  if (boy < 165) return "1";
+  if (boy < 170) return "2";
+  if (boy < 175) return "3";
+  if (boy < 180) return "4";
+  return "5";
 }
 
-function kadinPantolon(boy, kilo, gobekli){
-  const eslesme = ornekler.find(o =>
-    o.cinsiyet==="kadin" && o.boy===boy && o.kilo===kilo && o.gobekli===gobekli && o.pantolon
-  );
-  if (eslesme) return eslesme.pantolon;
-
-  let ana;
-  if (kilo < 50) ana = 38;
-  else if (kilo < 55) ana = 40;
-  else if (kilo < 61) ana = 42;
-  else if (kilo < 67) ana = 44;
-  else if (kilo < 73) ana = 46;
-  else if (kilo < 79) ana = 48;
-  else if (kilo < 85) ana = 50;
-  else if (kilo < 91) ana = 52;
-  else ana = 54;
-
-  if (gobekli === "evet") ana += 2;
-  ana = Math.min(54, ana);
-
-  let alt;
-  if (boy <= 160) alt = 1;
-  else if (boy <= 173) alt = 2;
-  else if (boy <= 178) alt = 3;
-  else if (boy <= 183) alt = 4;
-  else alt = 5;
-
-  return `${ana}-${alt}`;
+function maleLowerBase(kilo){
+  if (kilo < 66) return 47;
+  if (kilo < 72) return 49;
+  if (kilo < 79) return 51;
+  if (kilo < 87) return 53;
+  if (kilo < 95) return 55;
+  if (kilo < 103) return 57;
+  if (kilo < 111) return 59;
+  return 61;
 }
 
-function erkekElbise(boy, kilo, gobekli){
-  const eslesme = ornekler.find(o =>
-    o.cinsiyet==="erkek" && o.boy===boy && o.kilo===kilo && o.gobekli===gobekli && o.elbise
-  );
-  if (eslesme) return eslesme.elbise;
-
-  let ana;
-  if (kilo < 68) ana = 48;
-  else if (kilo < 77) ana = 50;
-  else if (kilo < 86) ana = 52;
-  else if (kilo < 94) ana = 54;
-  else if (kilo < 100) ana = 56;
-  else ana = 58;
-
-  let alt;
-  if (boy < 168) alt = 4;
-  else if (boy < 178) alt = 6;
-  else if (boy < 188) alt = 8;
-  else alt = 10;
-
-  if (gobekli === "evet"){
-    if (ana % 2 === 0) return `${upOdd(ana)}-${alt}A`;
-    return `${ana}-${alt}A`;
-  }
-
-  return `${ana}-${alt}`;
+function femaleLowerBase(kilo){
+  if (kilo < 50) return 38;
+  if (kilo < 55) return 40;
+  if (kilo < 60) return 42;
+  if (kilo < 66) return 44;
+  if (kilo < 72) return 46;
+  if (kilo < 78) return 48;
+  if (kilo < 84) return 50;
+  if (kilo < 90) return 52;
+  if (kilo < 96) return 54;
+  return 56;
 }
 
-function kadinElbise(boy, kilo, gobekli){
-  let ana;
-  if (kilo < 50) ana = 38;
-  else if (kilo < 55) ana = 40;
-  else if (kilo < 61) ana = 42;
-  else if (kilo < 67) ana = 44;
-  else if (kilo < 73) ana = 46;
-  else if (kilo < 79) ana = 48;
-  else if (kilo < 85) ana = 50;
-  else if (kilo < 91) ana = 52;
-  else ana = 54;
+function maleUpperBase(kilo, boy){
+  let b;
+  if (kilo < 66) b = 48;
+  else if (kilo < 73) b = 50;
+  else if (kilo < 80) b = 52;
+  else if (kilo < 88) b = 54;
+  else if (kilo < 96) b = 56;
+  else if (kilo < 104) b = 58;
+  else b = 60;
 
-  if (gobekli === "evet") ana += 2;
-  ana = Math.min(54, ana);
-
-  let alt;
-  if (boy <= 160) alt = 1;
-  else if (boy <= 173) alt = 2;
-  else if (boy <= 178) alt = 3;
-  else if (boy <= 183) alt = 4;
-  else alt = 5;
-
-  const aEki = gobekli === "evet" ? "A" : "";
-  return `${ana}-${alt}${aEki}`;
+  if (boy >= 187 && kilo < 90) b += 2;
+  return Math.min(62, b);
 }
 
-function erkekGomlek(boy, kilo, gobekli){
-  const eslesme = ornekler.find(o =>
-    o.cinsiyet==="erkek" && o.boy===boy && o.kilo===kilo && o.gobekli===gobekli && o.gomlek
-  );
-  if (eslesme) return eslesme.gomlek;
+function femaleUpperBase(kilo){
+  let b;
+  if (kilo < 50) b = 38;
+  else if (kilo < 55) b = 40;
+  else if (kilo < 60) b = 42;
+  else if (kilo < 66) b = 44;
+  else if (kilo < 72) b = 46;
+  else if (kilo < 78) b = 48;
+  else if (kilo < 84) b = 50;
+  else if (kilo < 90) b = 52;
+  else if (kilo < 96) b = 54;
+  else b = 56;
+  return Math.min(56, b);
+}
 
-  let beden;
-  if (kilo < 72) beden = "M";
-  else if (kilo < 82) beden = "M";
-  else if (kilo < 90) beden = "L";
-  else if (kilo < 95) beden = "XL";
-  else beden = "XXL";
+function maleShirt(boy, kilo, vucut){
+  const ref = findRef("erkek", boy, kilo, vucut, "gomlek");
+  if (ref) return ref;
 
-  if (boy >= 188){
-    if (kilo < 90) beden = "L";
-    else if (kilo < 95) beden = "XL";
-    else beden = "XXL";
-  } else if (boy >= 175 && kilo >= 80){
-    beden = "L";
-  }
+  let size;
+  if (kilo < 72) size = "M";
+  else if (kilo < 82) size = "M";
+  else if (kilo < 90) size = "L";
+  else if (kilo < 100) size = "XL";
+  else size = "XXL";
 
-  // göbek/basen seçeneği gömleği sadece gerekli aralıkta büyütsün
-  if (gobekli === "evet" && kilo < 88){
-    beden = shirtUp(beden);
-  }
+  // özel düzeltme: kısa ve kilolu erkekte gömlek fazla büyümesin
+  if (boy < 175 && kilo >= 88) size = "M";
 
   let tip;
-  if (boy >= 180) tip = "C";
-  else if (boy >= 170) tip = "B";
-  else tip = "A";
+  if (boy < 170) tip = "A";
+  else if (boy < 180) tip = "B";
+  else tip = "C";
 
-  return `${beden}-${tip}`;
+  const order = ["XS","S","M","L","XL","XXL","XXXL"];
+  if (vucut === "evet" && !(boy < 175 && kilo >= 88)) {
+    const i = order.indexOf(size);
+    if (i !== -1 && i < order.length - 1) size = order[i + 1];
+  }
+
+  return `${size}-${tip}`;
 }
 
-function kadinGomlek(boy, kilo, gobekli){
-  let beden;
-  if (kilo < 50) beden = "S";
-  else if (kilo < 60) beden = "M";
-  else if (kilo < 70) beden = "L";
-  else if (kilo < 80) beden = "XL";
-  else beden = "XXL";
-
-  if (gobekli === "evet") beden = shirtUp(beden);
+function femaleShirt(boy, kilo, vucut){
+  let size;
+  if (kilo < 50) size = "S";
+  else if (kilo < 60) size = "M";
+  else if (kilo < 70) size = "L";
+  else if (kilo < 80) size = "XL";
+  else size = "XXL";
 
   let tip;
-  if (boy >= 175) tip = "C";
-  else if (boy >= 165) tip = "B";
-  else tip = "A";
+  if (boy < 165) tip = "A";
+  else if (boy < 175) tip = "B";
+  else tip = "C";
 
-  return `${beden}-${tip}`;
+  const order = ["XS","S","M","L","XL","XXL","XXXL"];
+  if (vucut === "evet") {
+    const i = order.indexOf(size);
+    if (i !== -1 && i < order.length - 1) size = order[i + 1];
+  }
+
+  return `${size}-${tip}`;
+}
+
+function maleLower(boy, kilo, vucut){
+  const refPant = findRef("erkek", boy, kilo, vucut, "pantolon");
+  const refElb = findRef("erkek", boy, kilo, vucut, "elbise");
+  if (refPant || refElb) {
+    return {
+      pantolon: refPant || refElb,
+      elbise: refElb || refPant
+    };
+  }
+
+  let base = maleLowerBase(kilo);
+  if (vucut === "evet") base = nextOdd(base);
+  const drop = maleLowerDrop(base, boy, vucut);
+
+  const val = `${base}-${drop}${vucut === "evet" && drop !== "11/A" ? "A" : ""}`;
+  return { pantolon: val, elbise: val };
+}
+
+function femaleLower(boy, kilo, vucut){
+  const refPant = findRef("kadin", boy, kilo, vucut, "pantolon");
+  const refElb = findRef("kadin", boy, kilo, vucut, "elbise");
+  if (refPant || refElb) {
+    return {
+      pantolon: refPant || refElb,
+      elbise: refElb || refPant
+    };
+  }
+
+  let base = femaleLowerBase(kilo);
+  if (vucut === "evet") base = Math.min(56, base + 2);
+  const drop = femaleLowerDrop(boy);
+  const val = `${base}-${drop}${vucut === "evet" ? "A" : ""}`;
+  return { pantolon: val, elbise: val };
+}
+
+function maleUpper(boy, kilo, vucut, alan){
+  const ref = findRef("erkek", boy, kilo, vucut, alan);
+  if (ref) return ref;
+
+  let base = maleUpperBase(kilo, boy);
+  if (vucut === "evet" && !(boy < 175 && kilo >= 88)) base = nextEven(base);
+  return `${base}-${maleUpperLetter(boy)}`;
+}
+
+function femaleUpper(boy, kilo, vucut, alan){
+  const ref = findRef("kadin", boy, kilo, vucut, alan);
+  if (ref) return ref;
+
+  let base = femaleUpperBase(kilo);
+  if (vucut === "evet") base = Math.min(56, base + 2);
+  return `${base}-${femaleUpperLetter(boy)}`;
 }
 
 function hesapla(){
   const cinsiyet = document.getElementById("cinsiyet").value;
-  const gobekli = document.getElementById("gobekli").value;
+  const vucut = document.getElementById("vucut").value;
   const boy = Number(document.getElementById("boy").value);
   const kilo = Number(document.getElementById("kilo").value);
 
-  if (!boy || !kilo){
+  if (!boy || !kilo) {
     document.getElementById("uyari").textContent = "Boy ve kilo girildiğinde öneri üretilebilir.";
     return;
   }
 
-  let mont="", yelek="", pardosu="", pantolon="", elbise="", gomlek="";
+  let mont, yelek, pardosu, pantolon, elbise, gomlek;
 
-  if (cinsiyet === "erkek"){
-    mont = erkekUstGiyim(boy, kilo, gobekli, "mont");
-    yelek = erkekUstGiyim(boy, kilo, gobekli, "yelek");
-    pardosu = erkekUstGiyim(boy, kilo, gobekli, "pardosu");
-    pantolon = erkekPantolon(boy, kilo, gobekli);
-    elbise = erkekElbise(boy, kilo, gobekli);
-    gomlek = erkekGomlek(boy, kilo, gobekli);
+  if (cinsiyet === "erkek") {
+    mont = maleUpper(boy, kilo, vucut, "mont");
+    yelek = maleUpper(boy, kilo, vucut, "yelek");
+    pardosu = maleUpper(boy, kilo, vucut, "pardosu");
+    const lower = maleLower(boy, kilo, vucut);
+    pantolon = lower.pantolon;
+    elbise = lower.elbise;
+    gomlek = maleShirt(boy, kilo, vucut);
   } else {
-    mont = kadinMont(boy, kilo, gobekli);
-    yelek = kadinYelek(boy, kilo, gobekli);
-    pardosu = kadinPardosu(boy, kilo, gobekli);
-    pantolon = kadinPantolon(boy, kilo, gobekli);
-    elbise = kadinElbise(boy, kilo, gobekli);
-    gomlek = kadinGomlek(boy, kilo, gobekli);
+    mont = femaleUpper(boy, kilo, vucut, "mont");
+    yelek = femaleUpper(boy, kilo, vucut, "yelek");
+    pardosu = femaleUpper(boy, kilo, vucut, "pardosu");
+    const lower = femaleLower(boy, kilo, vucut);
+    pantolon = lower.pantolon;
+    elbise = lower.elbise;
+    gomlek = femaleShirt(boy, kilo, vucut);
   }
 
-  const kisiYazisi = `${cinsiyet === "erkek" ? "Erkek" : "Kadın"} • ${boy} cm • ${kilo} kg • ${gobekli === "evet" ? "Göbek/Basen var" : "Göbek/Basen yok"}`;
+  document.getElementById("kisiBilgisi").textContent =
+    `${cinsiyet === "erkek" ? "Erkek" : "Kadın"} • ${boy} cm • ${kilo} kg • ${vucut === "evet" ? "Göbek/Basen var" : "Göbek/Basen yok"}`;
 
-  document.getElementById("kisiBilgisi").textContent = kisiYazisi;
   document.getElementById("mont").textContent = mont;
   document.getElementById("yelek").textContent = yelek;
   document.getElementById("pardosu").textContent = pardosu;
@@ -337,18 +434,15 @@ function hesapla(){
 
 function temizle(){
   document.getElementById("cinsiyet").value = "erkek";
-  document.getElementById("gobekli").value = "hayir";
+  document.getElementById("vucut").value = "hayir";
   document.getElementById("boy").value = "";
   document.getElementById("kilo").value = "";
   document.getElementById("kisiBilgisi").textContent = "Önce bilgileri girip bedenleri göster butonuna basın.";
-  ["mont","yelek","pardosu","pantolon","elbise","gomlek"].forEach(id => {
-    document.getElementById(id).textContent = "-";
-  });
+  ["mont","yelek","pardosu","pantolon","elbise","gomlek"].forEach(id => document.getElementById(id).textContent = "-");
   document.getElementById("cards").classList.remove("show");
   document.getElementById("placeholder").style.display = "block";
-  document.getElementById("uyari").textContent = "Bu ekran ön öneri verir. Kesin beden depo kontrolü ile netleşir.";
+  document.getElementById("uyari").textContent = "Bu ekran ön öneri verir. Kesin beden teslim sırasında netleşir.";
 }
 </script>
-
 </body>
 </html>
