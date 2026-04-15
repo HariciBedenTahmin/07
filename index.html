@@ -283,11 +283,11 @@ function maleShirt(boy, kilo, vucut){
   if (ref) return ref;
 
   let size;
-if (kilo < 65) size = "XS";
-else if (kilo < 70) size = "S";
-else if (kilo < 77) size = "M";
-else if (kilo < 87) size = "L";
-else if (kilo < 95) size = "XL";
+if (kilo < 63) size = "XS";
+else if (kilo < 67) size = "S";
+else if (kilo < 78) size = "M";
+else if (kilo < 88) size = "L";
+else if (kilo < 98) size = "XL";
 else size = "XXL";
 
   // özel düzeltme: kısa ve kilolu erkekte gömlek fazla büyümesin
@@ -298,7 +298,7 @@ else size = "XXL";
   else if (boy < 180) tip = "B";
   else tip = "C";
 
-  const order = ["XS","S","M","L","XL","XXL","XXXL"];
+  const order = ["XS","S","M","L","XL","XXL"];
   if (vucut === "evet" && !(boy < 175 && kilo >= 88)) {
     const i = order.indexOf(size);
     if (i !== -1 && i < order.length - 1) size = order[i + 1];
