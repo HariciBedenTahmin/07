@@ -212,11 +212,10 @@ function femaleUpperLetter(boy){
 }
 
 function maleLowerDrop(base, boy, vucut){
-
   if (boy < 172) return base % 2 === 0 ? "4" : "5";
   else if (boy < 184) return base % 2 === 0 ? "6" : "7";
   else if (boy < 188) return base % 2 === 0 ? "8" : "9";
-  else return "A";
+  else return base % 2 === 0 ? "10" : "11";
 }
 
 function femaleLowerDrop(boy){
@@ -255,13 +254,12 @@ function maleUpperBase(kilo, boy){
   let b;
   if (kilo < 66) b = 48;
   else if (kilo < 73) b = 50;
-  else if (kilo < 80) b = 52;
-  else if (kilo < 88) b = 54;
-  else if (kilo < 96) b = 56;
-  else if (kilo < 104) b = 58;
-  else b = 60;
+  else if (kilo < 80) b = 50;
+  else if (kilo < 90) b = 52;
+  else if (kilo < 100) b = 54;
+  else if (kilo < 110) b = 56;
+  else b = 58;
 
-  if (boy >= 187 && kilo < 90) b += 2;
   return Math.min(62, b);
 }
 
