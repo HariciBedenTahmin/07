@@ -376,9 +376,8 @@ function maleUpper(boy, kilo, vucut, alan){
 
   if (vucut === "evet") lower = nextOdd(lower);
 
-  // 🔥 ALT BEDENE GÖRE ÜST BEDENİ BELİRLE
-  let lowerEven = (lower % 2 === 0) ? lower : lower + 1;
-  base = lowerEven;
+  // üst bedeni çift yap
+  if (base % 2 !== 0) base = base + 1;
 
   // göbek düzeltme
   if (vucut === "evet" && !(boy < 175 && kilo >= 88)) {
