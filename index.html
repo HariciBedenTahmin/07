@@ -376,14 +376,17 @@ function maleUpper(boy, kilo, vucut, alan){
 
   if (vucut === "evet") lower = nextOdd(lower);
 
-  // 🔥 ÜST ALT DENGESİ
-  if (base < lower - 1) base = lower - 1;
-  if (base > lower + 1) base = lower + 1;
+  // 🔥 ALT BEDENE GÖRE ÜST BEDENİ BELİRLE
+  let lowerEven = (lower % 2 === 0) ? lower : lower + 1;
+  base = lowerEven;
 
   // göbek düzeltme
   if (vucut === "evet" && !(boy < 175 && kilo >= 88)) {
     base = nextEven(base);
   }
+ 
+  // 🔥 ÜST BEDENİ ZORLA ÇİFT YAP
+  if (base % 2 !== 0) base = base + 1;
 
   return `${base}-${maleUpperLetter(boy)}`;
 }
