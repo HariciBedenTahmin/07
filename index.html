@@ -454,7 +454,9 @@
       if (kilo < 106) return 58;
       if (kilo < 110) return 59;
       if (kilo < 115) return 60;
-      return 61;
+      if (kilo < 120) return 61;
+      if (kilo < 125) return 62;
+      return 63;
     }
 
     function femaleLowerBase(kilo){
@@ -474,14 +476,15 @@
       let b;
       if (kilo < 66) b = 48;
       else if (kilo < 73) b = 50;
-      else if (kilo < 80) b = 50;
-      else if (kilo < 90) b = 52;
-      else if (kilo < 100) b = 54;
-      else if (kilo < 110) b = 56;
-      else b = 58;
+      else if (kilo < 80) b = 52;
+      else if (kilo < 90) b = 54;
+      else if (kilo < 100) b = 56;
+      else if (kilo < 105) b = 58;
+      else if (kilo < 110) b = 60;
+      else b = 62;
 
-      if (kilo >= 110 && boy >= 188) b += 2;
-      if (kilo >= 115 && boy >= 190) b += 2;
+    // uzun boy bonusu (tek kural yeter)
+    if (boy >= 190 && kilo >= 110) b += 2;
 
       return Math.min(62, b);
     }
