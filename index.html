@@ -6,150 +6,249 @@
   <title>Hizmet Giyeceği Beden Tahmin Sistemi</title>
   <style>
     :root{
-      --bg:#081425;
-      --bg2:#0d2340;
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.08);
-      --line:rgba(255,255,255,.12);
+      --bg:#071321;
+      --bg2:#0d2542;
+      --panel:rgba(255,255,255,.07);
+      --panel2:rgba(255,255,255,.09);
+      --line:rgba(255,255,255,.10);
       --text:#f8fafc;
       --muted:#cbd5e1;
       --gold:#d4af37;
+      --gold-soft:rgba(212,175,55,.12);
       --green:#1f6b45;
       --green2:#2d8e5e;
-      --shadow:0 18px 50px rgba(0,0,0,.30);
+      --shadow:0 22px 60px rgba(0,0,0,.35);
+      --radius:24px;
     }
 
-    *{box-sizing:border-box}
+    *{
+      box-sizing:border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    body{
+    html,body{
       margin:0;
+      padding:0;
+      min-height:100%;
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top right, rgba(212,175,55,.10), transparent 22%),
-        linear-gradient(135deg, var(--bg), var(--bg2));
+        radial-gradient(circle at top right, rgba(212,175,55,.10), transparent 18%),
+        radial-gradient(circle at top left, rgba(45,142,94,.10), transparent 18%),
+        linear-gradient(160deg, var(--bg), var(--bg2));
     }
 
-    .wrapper{max-width:1100px;margin:0 auto;padding:18px}
+    body{
+      display:flex;
+      justify-content:center;
+      padding:18px 10px 28px;
+    }
 
-    .hero,.panel{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:22px;
+    .app{
+      width:100%;
+      max-width:430px;
+    }
+
+    .phone-shell{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:32px;
+      padding:12px;
       box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
-    .hero{padding:24px;margin-bottom:18px}
+    .screen{
+      border-radius:28px;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+
+    .topbar{
+      padding:14px 18px 8px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .notch{
+      width:110px;
+      height:26px;
+      border-radius:20px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .content{
+      padding:12px;
+    }
+
+    .hero,
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero{
+      padding:18px;
+      margin-bottom:14px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      top:-30px;
+      right:-30px;
+      width:120px;
+      height:120px;
+      border-radius:999px;
+      background:rgba(212,175,55,.10);
+      filter:blur(8px);
+    }
 
     .badge{
       display:inline-block;
       padding:8px 12px;
       border-radius:999px;
-      font-size:12px;
-      color:#fff3c4;
-      background:rgba(212,175,55,.10);
-      border:1px solid rgba(212,175,55,.28);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.04em;
+      color:#fff4cc;
+      background:var(--gold-soft);
+      border:1px solid rgba(212,175,55,.20);
       margin-bottom:12px;
+      position:relative;
+      z-index:1;
     }
 
     h1{
       margin:0 0 10px;
-      font-size:clamp(28px, 4vw, 42px);
+      font-size:28px;
+      line-height:1.18;
       color:var(--gold);
+      position:relative;
+      z-index:1;
     }
 
     .hero p{
       margin:0;
       color:var(--muted);
-      line-height:1.7;
-      max-width:800px;
+      line-height:1.6;
+      font-size:14px;
+      position:relative;
+      z-index:1;
     }
 
     .stats{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-      margin-top:18px;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:16px;
+      position:relative;
+      z-index:1;
     }
 
     .stat{
-      background:var(--card2);
+      background:var(--panel2);
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
+      border-radius:18px;
+      padding:12px;
+      min-height:88px;
     }
 
     .stat small{
       display:block;
       color:var(--muted);
+      font-size:12px;
       margin-bottom:6px;
     }
 
     .stat strong{
+      display:block;
       color:var(--gold);
-      font-size:16px;
-      line-height:1.5;
+      font-size:14px;
+      line-height:1.45;
+      font-weight:700;
     }
 
-    .main{
+    .panel{
+      padding:16px;
+      margin-bottom:14px;
+    }
+
+    .panel h2{
+      margin:0 0 14px;
+      color:var(--gold);
+      font-size:18px;
+    }
+
+    .grid{
       display:grid;
-      grid-template-columns:380px 1fr;
-      gap:18px;
+      gap:12px;
     }
 
-    .form-panel,.results-panel{padding:20px}
-
-    .form-panel h2,.results-panel h2{
-      margin:0 0 16px;
-      color:var(--gold);
+    .grid.two{
+      grid-template-columns:1fr 1fr;
     }
-
-    .grid{display:grid;gap:12px}
-    .grid.two{grid-template-columns:1fr 1fr}
 
     label{
       display:block;
-      font-size:13px;
+      font-size:12px;
       color:var(--muted);
       margin-bottom:6px;
     }
 
     input,select{
       width:100%;
+      min-height:50px;
       padding:14px;
       border:none;
       outline:none;
-      border-radius:14px;
+      border-radius:16px;
       background:rgba(255,255,255,.08);
       color:var(--text);
       border:1px solid var(--line);
-      font-size:15px;
+      font-size:16px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
     }
 
     select option{
+      background:#ffffff;
       color:#111827;
-      background:#fff;
     }
 
     .buttons{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:16px;
+      gap:10px;
+      margin-top:14px;
     }
 
     button{
+      min-height:50px;
       border:none;
-      border-radius:14px;
+      border-radius:16px;
       padding:14px;
       font-size:15px;
-      font-weight:bold;
+      font-weight:700;
       cursor:pointer;
+      transition:transform .15s ease, opacity .15s ease;
+    }
+
+    button:active{
+      transform:scale(.98);
     }
 
     .primary{
       background:linear-gradient(135deg,var(--green),var(--green2));
       color:#fff;
+      box-shadow:0 10px 24px rgba(31,107,69,.25);
     }
 
     .secondary{
@@ -159,11 +258,561 @@
     }
 
     .info-box{
-      background:var(--card2);
+      background:var(--panel2);
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:16px;
-      margin-bottom:16px;
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:12px;
+    }
+
+    .info-title{
+      color:var(--gold);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .info-box p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+
+    .placeholder{
+      padding:22px 16px;
+      border-radius:18px;
+      border:1px dashed rgba(255,255,255,.18);
+      color:var(--muted);
+      text-align:center;
+      line-height:1.7;
+      font-size:14px;
+    }
+
+    .cards{
+      display:none;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .cards.show{
+      display:grid;
+    }
+
+    .card{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:15px;
+      min-height:148px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      top:-20px;
+      right:-20px;
+      width:70px;
+      height:70px;
+      border-radius:999px;
+      background:rgba(212,175,55,.08);
+    }
+
+    .card-title{
+      color:var(--gold);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      margin-bottom:8px;
+      position:relative;
+      z-index:1;
+      font-weight:700;
+    }
+
+    .value{
+      font-size:30px;
+      font-weight:800;
+      margin-bottom:10px;
+      line-height:1.15;
+      word-break:break-word;
+      position:relative;
+      z-index:1;
+    }
+
+    .desc{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+      position:relative;
+      z-index:1;
+    }
+
+    .note{
+      margin-top:14px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(212,175,55,.08);
+      border:1px solid rgba(212,175,55,.16);
+      color:#fde68a;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:11px;
+      margin-top:14px;
+      opacity:.9;
+    }
+
+    @media (max-width:380px){
+      .content{padding:10px}
+      h1{font-size:24px}
+      .cards,
+      .grid.two,
+      .buttons{
+        grid-template-columns:1fr;
+      }
+      .stats{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="phone-shell">
+      <div class="screen">
+        <div class="topbar">
+          <div class="notch"></div>
+        </div>
+
+        <div class="content">
+          <section class="hero">
+            <span class="badge">BEDEN TAHMİN EKRANI</span>
+            <h1>Hizmet Giyeceği Beden Tahmin Sistemi</h1>
+            <p>Boy, kilo, cinsiyet ve göbek/basen durumuna göre mont, yelek, pardösü, pantolon, elbise ve gömlek için ön beden önerisi verir.</p>
+
+            <div class="stats">
+              <div class="stat">
+                <small>Kalıp</small>
+                <strong>📏 46-48-50-...-58-60-62 kalıp örnekleridir</strong>
+              </div>
+              <div class="stat">
+                <small>Uzunluk</small>
+                <strong>📐 4-5-6-7-8-9-10-11-A-B-C-D-E uzunluk örnekleridir</strong>
+              </div>
+              <div class="stat">
+                <small>Ek Kural</small>
+                <strong>Göbek/Basen = 1 üst beden</strong>
+              </div>
+              <div class="stat">
+                <small>Şapka Ölçüsü</small>
+                <strong>🧢 Kulak üstünden kafa çevresi ölçülerek belirlenir. Çıkan cm şapka ölçünüzdür.</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>Bilgi Girişi</h2>
+
+            <div class="grid">
+              <div class="grid two">
+                <div>
+                  <label for="cinsiyet">Cinsiyet</label>
+                  <select id="cinsiyet">
+                    <option value="erkek">Erkek</option>
+                    <option value="kadin">Kadın</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="vucut">Göbek veya basen var mı?</label>
+                  <select id="vucut">
+                    <option value="hayir">Hayır</option>
+                    <option value="evet">Evet</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid two">
+                <div>
+                  <label for="boy">Boy (cm)</label>
+                  <input id="boy" type="number" placeholder="177" />
+                </div>
+                <div>
+                  <label for="kilo">Kilo (kg)</label>
+                  <input id="kilo" type="number" placeholder="84" />
+                </div>
+              </div>
+            </div>
+
+            <div class="buttons">
+              <button class="primary" onclick="hesapla()">Bedenleri Göster</button>
+              <button class="secondary" onclick="temizle()">Temizle</button>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>Önerilen Bedenler</h2>
+
+            <div class="info-box">
+              <div class="info-title">Ölçü Özeti</div>
+              <p id="kisiBilgisi">Önce bilgileri girip bedenleri göster butonuna basın.</p>
+            </div>
+
+            <div id="placeholder" class="placeholder">
+              Sonuç kartları, bilgiler girildikten sonra burada açılır.
+            </div>
+
+            <div id="cards" class="cards">
+              <div class="card">
+                <div class="card-title">Mont</div>
+                <div id="mont" class="value">-</div>
+                <div class="desc">🕒 4 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div>
+              </div>
+
+              <div class="card">
+                <div class="card-title">Yelek</div>
+                <div id="yelek" class="value">-</div>
+                <div class="desc">🕒 3 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div>
+              </div>
+
+              <div class="card">
+                <div class="card-title">Pardösü</div>
+                <div id="pardosu" class="value">-</div>
+                <div class="desc">🕒 6 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div>
+              </div>
+
+              <div class="card">
+                <div class="card-title">Pantolon</div>
+                <div id="pantolon" class="value">-</div>
+                <div class="desc">🕒 1 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div>
+              </div>
+
+              <div class="card">
+                <div class="card-title">Elbise</div>
+                <div id="elbise" class="value">-</div>
+                <div class="desc">🕒 3 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div>
+              </div>
+
+              <div class="card">
+                <div class="card-title">Gömlek</div>
+                <div id="gomlek" class="value">-</div>
+                <div class="desc">🕒 1 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div>
+              </div>
+            </div>
+
+            <div class="note" id="uyari">
+              Bu ekran ön öneri verir. Kesin beden teslim sırasında netleşir.
+            </div>
+
+            <div class="footer">Hizmet Giyeceği Beden Tahmin Sistemi</div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const refs = [
+      { cinsiyet:"erkek", boy:190, kilo:80, vucut:"hayir", mont:"52-E", yelek:"52-E", pardosu:"52-E", pantolon:"51-11A", elbise:"51-11A" },
+      { cinsiyet:"erkek", boy:177, kilo:84, vucut:"hayir", mont:"54-C", yelek:"54-C", pardosu:"54-C", pantolon:"53-7", elbise:"53-7" },
+      { cinsiyet:"erkek", boy:172, kilo:93, vucut:"evet", mont:"54-B", yelek:"54-B", pardosu:"54-B", pantolon:"54-6 / 55-7", elbise:"54-6A" },
+      { cinsiyet:"erkek", boy:180, kilo:93, vucut:"hayir", mont:"56-D", yelek:"56-D", pardosu:"56-D" },
+      { cinsiyet:"erkek", boy:182, kilo:88, vucut:"hayir", pantolon:"54-6", elbise:"54-6" },
+      { cinsiyet:"kadin", boy:172, kilo:58, vucut:"hayir", mont:"42-B", yelek:"42-B", pardosu:"42-B", pantolon:"42-2", elbise:"42-2", gomlek:"M-B" }
+    ];
+
+    function nextEven(n){ return n % 2 === 0 ? n + 2 : n + 1; }
+    function nextOdd(n){ return n % 2 === 1 ? n + 2 : n + 1; }
+
+    function findRef(cinsiyet,boy,kilo,vucut,alan){
+      const hit = refs.find(r =>
+        r.cinsiyet === cinsiyet &&
+        r.boy === boy &&
+        r.kilo === kilo &&
+        r.vucut === vucut &&
+        r[alan]
+      );
+      return hit ? hit[alan] : null;
+    }
+
+    function maleUpperLetter(boy){
+      if (boy < 165) return "A";
+      if (boy < 175) return "B";
+      if (boy < 182) return "C";
+      if (boy < 187) return "D";
+      return "E";
+    }
+
+    function femaleUpperLetter(boy){
+      if (boy < 165) return "A";
+      if (boy < 175) return "B";
+      if (boy < 182) return "C";
+      if (boy < 187) return "D";
+      return "E";
+    }
+
+    function maleLowerDrop(base, boy){
+      if (boy < 172) return base % 2 === 0 ? "4" : "5";
+      if (boy < 184) return base % 2 === 0 ? "6" : "7";
+      if (boy < 188) return base % 2 === 0 ? "8" : "9";
+      return "11A";
+    }
+
+    function femaleLowerDrop(boy){
+      if (boy < 165) return "1";
+      if (boy < 170) return "2";
+      if (boy < 175) return "3";
+      if (boy < 180) return "4";
+      return "5";
+    }
+
+    function maleLowerBase(kilo){
+      if (kilo < 62) return 46;
+      if (kilo < 66) return 47;
+      if (kilo < 70) return 48;
+      if (kilo < 74) return 49;
+      if (kilo < 77) return 50;
+      if (kilo < 80) return 51;
+      if (kilo < 83) return 52;
+      if (kilo < 87) return 53;
+      if (kilo < 90) return 54;
+      if (kilo < 94) return 55;
+      if (kilo < 97) return 56;
+      if (kilo < 101) return 57;
+      if (kilo < 106) return 58;
+      if (kilo < 110) return 59;
+      if (kilo < 115) return 60;
+      if (kilo < 120) return 61;
+      if (kilo < 125) return 62;
+      return 63;
+    }
+
+    function femaleLowerBase(kilo){
+      if (kilo < 50) return 38;
+      if (kilo < 55) return 40;
+      if (kilo < 60) return 42;
+      if (kilo < 66) return 44;
+      if (kilo < 72) return 46;
+      if (kilo < 78) return 48;
+      if (kilo < 84) return 50;
+      if (kilo < 90) return 52;
+      if (kilo < 96) return 54;
+      return 56;
+    }
+
+    function maleUpperBase(kilo, boy){
+      let b;
+      if (kilo < 66) b = 48;
+      else if (kilo < 73) b = 50;
+      else if (kilo < 80) b = 52;
+      else if (kilo < 90) b = 54;
+      else if (kilo < 100) b = 56;
+      else if (kilo < 110) b = 58;
+      else if (kilo < 125) b = 60;
+      else b = 62;
+
+      if (boy >= 190 && kilo >= 110) b += 2;
+
+      return Math.min(62, b);
+    }
+
+    function femaleUpperBase(kilo){
+      let b;
+      if (kilo < 50) b = 38;
+      else if (kilo < 55) b = 40;
+      else if (kilo < 60) b = 42;
+      else if (kilo < 66) b = 44;
+      else if (kilo < 72) b = 46;
+      else if (kilo < 78) b = 48;
+      else if (kilo < 84) b = 50;
+      else if (kilo < 90) b = 52;
+      else if (kilo < 96) b = 54;
+      else b = 56;
+      return Math.min(56, b);
+    }
+
+    function maleShirt(boy, kilo, vucut){
+      let size;
+
+      if (kilo < 63) size = "XS";
+      else if (kilo < 67) size = "S";
+      else if (kilo < 78) size = "M";
+      else if (kilo < 88) size = "L";
+      else if (kilo < 98) size = "XL";
+      else if (kilo < 140) size = "XXL";
+      else size = "XXXL";
+
+      let tip;
+      if (boy < 173) tip = "A";
+      else if (boy < 184) tip = "B";
+      else tip = "C";
+
+      const order = ["XS","S","M","L","XL","XXL","XXXL"];
+      if (vucut === "evet") {
+        const i = order.indexOf(size);
+        if (i !== -1 && i < order.length - 1) size = order[i + 1];
+      }
+
+      return `${size}-${tip}`;
+    }
+
+    function femaleShirt(boy, kilo, vucut){
+      let size;
+      if (kilo < 50) size = "S";
+      else if (kilo < 60) size = "M";
+      else if (kilo < 70) size = "L";
+      else if (kilo < 80) size = "XL";
+      else size = "XXL";
+
+      let tip;
+      if (boy < 165) tip = "A";
+      else if (boy < 175) tip = "B";
+      else tip = "C";
+
+      const order = ["XS","S","M","L","XL","XXL","XXXL"];
+      if (vucut === "evet") {
+        const i = order.indexOf(size);
+        if (i !== -1 && i < order.length - 1) size = order[i + 1];
+      }
+
+      return `${size}-${tip}`;
+    }
+
+    function maleLower(boy, kilo, vucut){
+      const refPant = findRef("erkek", boy, kilo, vucut, "pantolon");
+      const refElb = findRef("erkek", boy, kilo, vucut, "elbise");
+      if (refPant || refElb) {
+        return {
+          pantolon: refPant || refElb,
+          elbise: refElb || refPant
+        };
+      }
+
+      let base = maleLowerBase(kilo);
+      if (vucut === "evet") base = nextOdd(base);
+      const drop = maleLowerDrop(base, boy);
+
+      const val = `${base}-${drop}${vucut === "evet" && drop !== "11A" ? "A" : ""}`;
+      return { pantolon: val, elbise: val };
+    }
+
+    function femaleLower(boy, kilo, vucut){
+      const refPant = findRef("kadin", boy, kilo, vucut, "pantolon");
+      const refElb = findRef("kadin", boy, kilo, vucut, "elbise");
+      if (refPant || refElb) {
+        return {
+          pantolon: refPant || refElb,
+          elbise: refElb || refPant
+        };
+      }
+
+      let base = femaleLowerBase(kilo);
+      if (vucut === "evet") base = Math.min(56, base + 2);
+      const drop = femaleLowerDrop(boy);
+      const val = `${base}-${drop}${vucut === "evet" ? "A" : ""}`;
+      return { pantolon: val, elbise: val };
+    }
+
+    function maleUpper(boy, kilo, vucut, alan){
+      const ref = findRef("erkek", boy, kilo, vucut, alan);
+      if (ref) return ref;
+
+      let base = maleUpperBase(kilo, boy);
+
+      let lower = maleLowerBase(kilo);
+      if (vucut === "evet") lower = nextOdd(lower);
+
+      let lowerEven = (lower % 2 === 0) ? lower : lower + 1;
+
+      if (base < lowerEven) base = lowerEven;
+
+      if (vucut === "evet") {
+        base = nextEven(base);
+      }
+
+      if (base % 2 !== 0) base = base + 1;
+
+      return `${base}-${maleUpperLetter(boy)}`;
+    }
+
+    function femaleUpper(boy, kilo, vucut, alan){
+      const ref = findRef("kadin", boy, kilo, vucut, alan);
+      if (ref) return ref;
+
+      let base = femaleUpperBase(kilo);
+      if (vucut === "evet") base = Math.min(56, base + 2);
+      return `${base}-${femaleUpperLetter(boy)}`;
+    }
+
+    function hesapla(){
+      const cinsiyet = document.getElementById("cinsiyet").value;
+      const vucut = document.getElementById("vucut").value;
+      const boy = Number(document.getElementById("boy").value);
+      const kilo = Number(document.getElementById("kilo").value);
+
+      if (!boy || !kilo) {
+        document.getElementById("uyari").textContent = "Boy ve kilo girildiğinde öneri üretilebilir.";
+        return;
+      }
+
+      let mont, yelek, pardosu, pantolon, elbise, gomlek;
+
+      if (cinsiyet === "erkek") {
+        mont = maleUpper(boy, kilo, vucut, "mont");
+        yelek = maleUpper(boy, kilo, vucut, "yelek");
+        pardosu = maleUpper(boy, kilo, vucut, "pardosu");
+        const lower = maleLower(boy, kilo, vucut);
+        pantolon = lower.pantolon;
+        elbise = lower.elbise;
+        gomlek = maleShirt(boy, kilo, vucut);
+      } else {
+        mont = femaleUpper(boy, kilo, vucut, "mont");
+        yelek = femaleUpper(boy, kilo, vucut, "yelek");
+        pardosu = femaleUpper(boy, kilo, vucut, "pardosu");
+        const lower = femaleLower(boy, kilo, vucut);
+        pantolon = lower.pantolon;
+        elbise = lower.elbise;
+        gomlek = femaleShirt(boy, kilo, vucut);
+      }
+
+      document.getElementById("kisiBilgisi").textContent =
+        `${cinsiyet === "erkek" ? "Erkek" : "Kadın"} • ${boy} cm • ${kilo} kg • ${vucut === "evet" ? "Göbek/Basen var" : "Göbek/Basen yok"}`;
+
+      document.getElementById("mont").textContent = mont;
+      document.getElementById("yelek").textContent = yelek;
+      document.getElementById("pardosu").textContent = pardosu;
+      document.getElementById("pantolon").textContent = pantolon;
+      document.getElementById("elbise").textContent = elbise;
+      document.getElementById("gomlek").textContent = gomlek;
+
+      document.getElementById("cards").classList.add("show");
+      document.getElementById("placeholder").style.display = "none";
+      document.getElementById("uyari").textContent = "Bu ekran ön öneri verir. Göbek veya basen varsa sistem bir üst beden önerir.";
+    }
+
+    function temizle(){
+      document.getElementById("cinsiyet").value = "erkek";
+      document.getElementById("vucut").value = "hayir";
+      document.getElementById("boy").value = "";
+      document.getElementById("kilo").value = "";
+      document.getElementById("kisiBilgisi").textContent = "Önce bilgileri girip bedenleri göster butonuna basın.";
+      ["mont","yelek","pardosu","pantolon","elbise","gomlek"].forEach(id => {
+        document.getElementById(id).textContent = "-";
+      });
+      document.getElementById("cards").classList.remove("show");
+      document.getElementById("placeholder").style.display = "block";
+      document.getElementById("uyari").textContent = "Bu ekran ön öneri verir. Kesin beden teslim sırasında netleşir.";
+    }
+  </script>
+</body>
+</html>      margin-bottom:16px;
     }
 
     .info-title{
