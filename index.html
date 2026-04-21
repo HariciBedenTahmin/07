@@ -91,8 +91,8 @@ button{border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:bo
     <h1>Hizmet Giyeceği Beden Tahmin Sistemi</h1>
     <p>Boy, kilo, cinsiyet ve göbek/basen durumuna göre mont, yelek, pardösü, pantolon, elbise ve gömlek için ön beden önerisi verir.</p>
     <div class="stats">
-      <div class="stat"><small>Kalıbı</small><strong>📏 46-48-50-...-58-60-62 kalıb örnekleridir</strong></div>
-      <div class="stat"><small>Uzunluk</small><strong>📐4-5-6-78-9-10-11-A-B-C-D-E uzunluk örnekleridir.</strong></div>
+      <div class="stat"><small>Kalıbı</small><strong>📏 46-48-50-...-58-60-62 kalıp örnekleridir</strong></div>
+      <div class="stat"><small>Uzunluk</small><strong>📐4-5-6-7-8-9-10-11-A-B-C-D-E uzunluk örnekleridir.</strong></div>
       <div class="stat"><small>Ek Kural</small><strong>Göbek/Basen = 1 üst beden</strong></div>
        <div class="stat"><small>Şapka Ölçüsü</small><strong>🧢Kulak üstünden kafa çevresi ölçülerek belirlenir.Çıkan cm şapka ölçünüzdür.</strong></div>
     </div>
@@ -142,19 +142,18 @@ button{border:none;border-radius:14px;padding:14px;font-size:15px;font-weight:bo
         <div class="info-title">Ölçü Özeti</div>
         <p id="kisiBilgisi">Önce bilgileri girip bedenleri göster butonuna basın.</p>
       </div>
-      <div class="info-box">
 
       <div id="placeholder" class="placeholder">
         Sonuç kartları, bilgiler girildikten sonra burada açılır.
       </div>
 
       <div id="cards" class="cards">
-        <div class="card"><div class="card-title">Mont</div><div id="mont" class="value">-</div><div class="desc">🕒 4 yıl<br>⚠️Sistemde yoksa yakın bedenine bakınız.</div></div>
-        <div class="card"><div class="card-title">Yelek</div><div id="yelek" class="value">-</div><div class="desc">🕒 3 yıl<br>⚠️Sistemde yoksa yakın bedenine bakınız.</div></div>
-        <div class="card"><div class="card-title">Pardösü</div><div id="pardosu" class="value">-</div><div class="desc">🕒 6 yıl<br>⚠️Sistemde yoksa yakın bedenine bakınız..</div></div>
-        <div class="card"><div class="card-title">Pantolon</div><div id="pantolon" class="value">-</div><div class="desc">🕒 1 yıl<br>⚠️Sistemde yoksa yakın bedenine bakınız.</div></div>
-        <div class="card"><div class="card-title">Elbise</div><div id="elbise" class="value">-</div><div class="desc">🕒 3 yıl<br>⚠️Sistemde yoksa yakın bedenine bakınız.</div></div>
-        <div class="card"><div class="card-title">Gömlek</div><div id="gomlek" class="value">-</div><div class="desc">🕒 1 yıl<br>⚠️Sistemde yoksa yakın bedenine bakınız.</div></div>
+        <div class="card"><div class="card-title">Mont</div><div id="mont" class="value">-</div><div class="desc">🕒 4 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div></div>
+        <div class="card"><div class="card-title">Yelek</div><div id="yelek" class="value">-</div><div class="desc">🕒 3 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div></div>
+        <div class="card"><div class="card-title">Pardösü</div><div id="pardosu" class="value">-</div><div class="desc">🕒 6 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız..</div></div>
+        <div class="card"><div class="card-title">Pantolon</div><div id="pantolon" class="value">-</div><div class="desc">🕒 1 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div></div>
+        <div class="card"><div class="card-title">Elbise</div><div id="elbise" class="value">-</div><div class="desc">🕒 3 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div></div>
+        <div class="card"><div class="card-title">Gömlek</div><div id="gomlek" class="value">-</div><div class="desc">🕒 1 yıl<br>⚠️ Sistemde yoksa yakın bedenine bakınız.</div></div>
       </div>
 
       <div class="note" id="uyari">
@@ -210,7 +209,7 @@ function maleLowerDrop(base, boy, vucut){
   if (boy < 172) return base % 2 === 0 ? "4" : "5";
   else if (boy < 184) return base % 2 === 0 ? "6" : "7";
   else if (boy < 188) return base % 2 === 0 ? "8" : "9";
-  else return base % 2 === 0 ? "11A";
+  else return "11A";
 }
 
 function femaleLowerDrop(boy){
@@ -345,7 +344,7 @@ function maleLower(boy, kilo, vucut){
   if (vucut === "evet") base = nextOdd(base);
   const drop = maleLowerDrop(base, boy, vucut);
 
-  const val = `${base}-${drop}${vucut === "evet" && drop !== "11/A" ? "A" : ""}`;
+  const val = `${base}-${drop}${vucut === "evet" && drop !== "11A" ? "A" : ""}`;
   return { pantolon: val, elbise: val };
 }
 
